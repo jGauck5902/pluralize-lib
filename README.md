@@ -45,3 +45,10 @@ The trade-off: the irregular table is hand-maintained and deliberately finite. I
 - `pluralize(word: string): string` — singular → plural
 - `singularize(word: string): string` — plural → singular
 - `countInflect(count: number, word: string): string` — returns `"<count> <word>"` with the word inflected based on whether count is exactly 1
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
